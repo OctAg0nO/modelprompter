@@ -1,33 +1,5 @@
-Stopwatch {
-  layout: horizontal;
-  padding: 1;
-  margin: 1;
-  background: $boost;
-}
-
-#stop {
-  display: none;
-  dock: left;
-}
-#start {
-  dock: left;
-}
-#reset {
-  dock: right;
-}
-#time {
-  height: 3;
-  content-align: center middle;
-  text-opacity: 0.5;
-}
-
-.started #start {
-  display: none;
-}
-.started #stop {
-  display: block;
-}
-
-.hidden {
-  display: none;
+Screen {
+  layout: grid;
+  grid-size: 3;
+  grid-columns: 2fr 1fr 1fr;
 }
