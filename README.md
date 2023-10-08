@@ -40,12 +40,8 @@ pip install -r requirements.txt
 ## Running
 ```bash
 # Start
-python app.py
+pymon app.py
 
 # Stop
 CTRL+C
 ```
-
-## Development notes
-Ignore this I'm just very new to Python 😅:
-- `textual run --dev app.py` for CSS hot reloading. `python app.py` is more for aesthetic

@@ -1,6 +1,6 @@
 from textual.app import App
-from textual.widgets import Header, Placeholder
-from textual.containers import ScrollableContainer, Horizontal, Vertical
+from textual.widgets import Header, Button, Placeholder, Footer
+from textual.containers import ScrollableContainer, Horizontal
 
 # Create a new app
 class MP(App):
@@ -8,12 +8,13 @@ class MP(App):
   CSS_PATH = "app.css"
 
   def compose(self):
-    yield Header(show_clock=True)
+    yield Header()
     with Horizontal():
+      with ScrollableContainer(id="leftSidebar"):
+        yield Placeholder("Sidebar area")
       with ScrollableContainer():
-        yield Placeholder("Hello, world!")
-      with ScrollableContainer():
-        yield Placeholder("Hello, world!")
+        yield Placeholder("Content area")
+    yield Footer()
 
 # Run the app
 if __name__ == "__main__":
