@@ -1,3 +1,5 @@
+![logo-title 8a56eaae](https://github.com/ZacTolle/modelprompter/assets/139601580/e302ce36-acd5-4c70-be65-04d490d30c70)
+
 # Work in progress
 > This project is still in development and is not ready for use.
 
