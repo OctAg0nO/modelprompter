@@ -40,7 +40,7 @@ pip install -r requirements.txt
 ## Running
 ```bash
 # Start
-pymon app.py
+pymon src/app.py
 
 # Stop
 CTRL+C
