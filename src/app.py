@@ -2,6 +2,7 @@ from util.store import Store
 from util.router import Router
 
 from textual.app import App
+from textual.binding import Binding
 from textual.widgets import Header, Button, Placeholder, Footer
 from textual.containers import ScrollableContainer, Horizontal
 
@@ -11,18 +12,16 @@ class MP(App):
   CSS_PATH = "./css/app.css"
 
   def __init__(self):
+    self.router = Router(self, '/')
     super().__init__()
-    store = Store(self, '../config.json')
-    router = Router(self, '/')
+    self.store = Store(self, 'config.json')
 
   # Compose the layout
   def compose(self):
     yield Header()
     with Horizontal():
-      with ScrollableContainer(id="leftSidebar"):
-        yield Button("Settings")
       with ScrollableContainer():
-        yield Placeholder("Content area")
+        yield Placeholder(str(self.router.route) + '\n' + str(self.store.data) + '\n' + str(self.store.error))
     yield Footer()
 
   """
