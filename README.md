@@ -17,9 +17,12 @@ To design the easiest and most hackable Graphical User Interface (GUI) and proce
 # Work in progress screenshots
 <table>
   <tr>
-    <td><h3>Mockup</h3><img width="800" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/b2815cd5-82e4-4493-a71b-58eb01d09943"></td>
-    <td><h3>(inside a terminal)</h3><img width="800" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/aeb621b2-2e73-477a-9575-9b12028d6f5b">
-</td>
+    <td><h3>Terminal</h3><img width="800" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/b2815cd5-82e4-4493-a71b-58eb01d09943"></td>
+    <td><h3>VSCode</h3><img width="800" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/aeb621b2-2e73-477a-9575-9b12028d6f5b"></td>
+  </tr>
+  <tr>
+    <td><h3>Powershell</h3><img width="737" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/d3906709-576f-4395-9ed9-b0ba1935f517"></td>
+    <td><h3>Glitch.com Terminal</h3><img width="958" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/60b6c6ba-b931-43ea-9d62-7ae6b3c8e722"></td>
   </tr>
 </table>
 
