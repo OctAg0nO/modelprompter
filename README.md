@@ -48,12 +48,15 @@ source ./env/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Or one of these
+# python3 -m pip install -r requirements.txt
 ```
 
 ## Running
 ```bash
 # Start
-pymon src/app.py
+watchmedo auto-restart -p "*.py" -R python src/app.py
 
 # Stop
 CTRL+C
