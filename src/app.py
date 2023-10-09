@@ -12,16 +12,22 @@ class MP(App):
   CSS_PATH = "./css/app.css"
 
   def __init__(self):
-    self.router = Router(self, '/')
+    self.router = Router(self, 'connections')
     super().__init__()
     self.store = Store(self, 'config.json')
+    self.logs = []
+
+  # Log
+  def print(self, message):
+    self.logs.append(message)
+    self.refresh()
 
   # Compose the layout
   def compose(self):
     yield Header()
     with Horizontal():
       with ScrollableContainer():
-        yield Placeholder(str(self.router.route) + '\n' + str(self.store.data) + '\n' + str(self.store.error))
+        yield from self.router.Yield()
     yield Footer()
 
   """

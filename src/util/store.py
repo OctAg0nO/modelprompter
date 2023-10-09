@@ -21,9 +21,9 @@ class Store:
       try:
         with open(self.filename, 'w') as f:
           json.dump({}, f)
-          self.error.append(f'File not found, new one created: {self.filename}')
+          self.app.print(f'🚨 File not found, new one created: {self.filename}')
       except Exception as e:
-        self.error.append(e)
+        self.app.print(f'🚨 {e}')
       self.app.router.goto('connections')
       return {}
 
