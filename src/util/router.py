@@ -5,13 +5,13 @@ class Router:
   def __init__(self, app, route):
     self.app = app
     self.route = route
-    self.components = []
 
   def goto(self, route):
     self.route = route
+    self.app.refresh()
 
-  def Yield(self):
+  def compose(self):
     if (self.route == 'connections'):
-      yield from Connections().View()
+      yield from Connections(self).compose()
     else:
       yield Placeholder('🐞 404\n\nRoute: ' + str(self.route))

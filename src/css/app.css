@@ -1,7 +1,13 @@
-#leftSidebar {
-  max-width: 20;
+.sidebar {
+  max-width: 32;
 }
 
-#leftSidebar Button {
+.sidebar > Input {
   width: 100%;
+  margin: 1;
+}
+
+.sidebar > Button {
+  width: 100%;
+  margin: 1;
 }

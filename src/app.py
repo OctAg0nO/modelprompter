@@ -3,12 +3,11 @@ from util.router import Router
 
 from textual.app import App
 from textual.binding import Binding
-from textual.widgets import Header, Button, Placeholder, Footer
-from textual.containers import ScrollableContainer, Horizontal
+from textual.widgets import Header, ContentSwitcher, Footer
 
 # Create a new app
 class MP(App):
-  TITLE = "ModelPrompter"
+  TITLE = "ModelPrompter 0.0.1"
   CSS_PATH = "./css/app.css"
 
   def __init__(self):
@@ -25,9 +24,8 @@ class MP(App):
   # Compose the layout
   def compose(self):
     yield Header()
-    with Horizontal():
-      with ScrollableContainer():
-        yield from self.router.Yield()
+    with ContentSwitcher(initial=self.router.route):
+      yield from self.router.compose()
     yield Footer()
 
   """
@@ -36,7 +34,6 @@ class MP(App):
   """
   async def on_mount(self):
     pass
-  
 
 # Run the app
 if __name__ == "__main__":
