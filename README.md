@@ -56,7 +56,7 @@ pip install -r requirements.txt
 ## Running
 ```bash
 # Start
-watchmedo auto-restart -p "*.py" -R python src/app.py
+watchmedo auto-restart -i env -R --no-restart-on-command-exit -p "*.py;*.json;*.tcss" python src/app.py
 
 # Stop
 CTRL+C

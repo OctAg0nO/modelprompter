@@ -30,7 +30,7 @@ class MP(App):
   def compose(self):
     yield Header()
     with ContentSwitcher(initial=self.route):
-      yield Connections(id='connections')
+      yield Connections(id='connections', store=self.store)
     yield Footer()
 
   """

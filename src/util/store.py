@@ -29,11 +29,17 @@ class Store:
 
   def save_data(self):
     with open(self.filename, 'w') as f:
-      json.dump(self.data, f)
+      json.dump(self.data, f, indent='\t')
 
-  def get(self, key):
-    return self.data.get(key)
+  def get(self, key, default=None):
+    return self.data.get(key) or default
 
   def set(self, key, value):
     self.data[key] = value
+    self.save_data()
+
+  def append(self, key, value):
+    if (not self.data.get(key)):
+      self.data[key] = []
+    self.data[key].append(value)
     self.save_data()

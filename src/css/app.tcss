@@ -86,14 +86,14 @@ $success-lighten-2: #c6f0b0;
 $success-lighten-3: #e3f7d6;
 
 * {
-  color: #3d996b;
+color: #3d996b;
 }
 Footer, Header {
   background: $panel;
 }
 .code_inline {
   color: $warning;
-  background: $panel-lighten-1;
+  background: $panel-lighten-2;
 }
 
 .sidebar {
