@@ -9,6 +9,9 @@ COLUMNS = ["Connection", "Model", "MaxTokens", "Notes"]
 
 class Connections(Static):
   app = {}
+  BINDINGS = [
+    Binding("f5", "reload_config", "Reload config"),
+  ]
 
   def __init__(self, id, app):
     super().__init__()
@@ -47,6 +50,14 @@ Connections are saved into `./config.json`.
     """
     table = self.query_one('#connections-table')
     table.add_columns(*COLUMNS)
+    table.add_rows(self.dbToRows(self.app.store.get('connections', [])))
+    self.select_row_by_id(self.app.store.get('current_connection'))
+
+  def action_reload_config(self):
+    """Reloads the config from the file"""
+    table = self.query_one('#connections-table')
+    table.clear()
+    self.app.store.data = self.app.store.load_data()
     table.add_rows(self.dbToRows(self.app.store.get('connections', [])))
     self.select_row_by_id(self.app.store.get('current_connection'))
 
