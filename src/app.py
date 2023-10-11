@@ -1,5 +1,6 @@
 from util.store import Store
 from page.connections import Connections
+from page.chat import Chat
 
 from textual.app import App
 from textual.widgets import Header, ContentSwitcher, Footer, Placeholder
@@ -10,9 +11,9 @@ class MP(App):
   CSS_PATH = "./css/app.tcss"
 
   def __init__(self):
-    self.route = 'connections'
     super().__init__()
     self.store = Store(self, 'config.json')
+    self.route = self.store.get('current_route', 'connections')
     self.logs = []
 
   # Log messages to the onscreen terminal
@@ -22,22 +23,16 @@ class MP(App):
 
   # Simple router
   def goto(self, route):
-    self.route = route
-    self.refresh()
+    self.store.set('current_route', route)
+    self.query_one('#router').current = route = self.route = route
 
   # Compose the layout
   def compose(self):
     yield Header()
-    with ContentSwitcher(initial=self.route):
+    with ContentSwitcher(id='router', initial=self.route):
       yield Connections(id='connections', app=self)
+      yield Chat(id='chat', app=self)
     yield Footer()
-
-  """
-  - Check if ../../config.json exists
-  - If it doesn't, redirect route to /settings/connections/new
-  """
-  async def on_mount(self):
-    pass
 
 # Run the app
 if __name__ == "__main__":

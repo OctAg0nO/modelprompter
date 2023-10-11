@@ -2,7 +2,7 @@ import uuid
 
 from textual import on
 from textual.binding import Binding
-from textual.widgets import Label, DataTable, Button, Input, Markdown, Static
+from textual.widgets import Label, Header, DataTable, Button, Input, Markdown, Static
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 
 COLUMNS = ["Connection", "Model", "MaxTokens", "Notes"]
@@ -13,20 +13,17 @@ class Connections(Static):
     Binding("f5", "reload_config", "Reload config"),
   ]
 
-  def __init__(self, id, app):
+  def __init__(self, app, id):
     super().__init__()
-    self.id = id
     self.app = app
+    self.id = id
     
   def compose(self):
     # 2 column layout, 1 with a Placeholder and one with a DataTable
     # NOTE: id must === app.route
     with Horizontal(id='route-connections'):
-      with ScrollableContainer(classes='sidebar'):
-        yield Markdown("""\
-## Connections
-Connections are saved into `./config.json`.
-""", classes="mt0")
+      with ScrollableContainer(classes='sidebar mt0'):
+        # yield Markdown("""## New Connection""", classes="mt0")
         yield Label('API Key*')
         yield Input(id='connections-new-key', value='', password=True)
         yield Label('Model*')
@@ -39,7 +36,7 @@ Connections are saved into `./config.json`.
         yield Input(value='4096', id='connections-new-max-tokens')
         yield Button(id='connections-new-btn', label='Add new connection', variant='primary')
       with Vertical():
-        with ScrollableContainer():
+        with ScrollableContainer(classes='pl1'):
           yield DataTable(id='connections-table', cursor_type="row", zebra_stripes=True)
 
   def on_mount(self):
@@ -89,6 +86,7 @@ Connections are saved into `./config.json`.
     })
     self.app.store.set('current_connection', ID)
     self.select_row_by_id(ID)
+    self.app.goto('chat')
 
   def select_row_by_id(self, ID):
     """
@@ -111,3 +109,4 @@ Connections are saved into `./config.json`.
     """Sets the current_connection to the ID of the selected row"""
     connections = self.app.store.get('connections', [])
     self.select_row_by_id(connections[event.cursor_row]['id'])
+    self.app.goto('chat')

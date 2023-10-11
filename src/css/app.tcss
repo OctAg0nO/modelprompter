@@ -103,6 +103,7 @@ Footer, Header {
   background: $panel-lighten-2;
 }
 
+# Sidebar
 .sidebar {
   max-width: 32;
   padding-right: 1;
@@ -112,25 +113,35 @@ Footer, Header {
   color: $primary-lighten-3;
 }
 .sidebar > Input {
+  border: none;
   width: 100%;
   margin: 0;
-  border: none;
   padding: 0;
 }
 
-.sidebar > Button {
+.sidebar Button {
   width: 100%;
   margin: 0;
   margin-top: 1;
 }
 
-Markdown {
+.sidebar Markdown {
   padding: 0;
   margin: 0;
+  margin-top: -1;
 }
 
 # Helpers
 .mt0 {
   margin-top: 0;
-  padding-top: 0;
+}
+.pl1 {
+  padding-left: 1;
+}
+
+
+
+# Chat
+#chat-input-wrap {
+  height: 3;
 }
