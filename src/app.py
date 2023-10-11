@@ -2,7 +2,6 @@ from util.store import Store
 from page.connections import Connections
 
 from textual.app import App
-from textual.binding import Binding
 from textual.widgets import Header, ContentSwitcher, Footer, Placeholder
 
 # Create a new app
@@ -30,7 +29,7 @@ class MP(App):
   def compose(self):
     yield Header()
     with ContentSwitcher(initial=self.route):
-      yield Connections(id='connections', store=self.store)
+      yield Connections(id='connections', app=self)
     yield Footer()
 
   """

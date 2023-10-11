@@ -85,9 +85,16 @@ $success-lighten-1: #a9e98a;
 $success-lighten-2: #c6f0b0;
 $success-lighten-3: #e3f7d6;
 
-* {
-color: #3d996b;
+.datatable--cursor {
+  background: $accent;
 }
+.datatable--hover {
+  background: $accent-darken-3;
+}
+.datatable--header-hover {
+  background: $primary-darken-2;
+}
+
 Footer, Header {
   background: $panel;
 }
@@ -98,7 +105,6 @@ Footer, Header {
 
 .sidebar {
   max-width: 32;
-  padding-left: 1;
   padding-right: 1;
 }
 
@@ -114,12 +120,17 @@ Footer, Header {
 
 .sidebar > Button {
   width: 100%;
-  margin: 1;
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
+  margin-top: 1;
 }
 
 Markdown {
   padding: 0;
   margin: 0;
+}
+
+# Helpers
+.mt0 {
+  margin-top: 0;
+  padding-top: 0;
 }
