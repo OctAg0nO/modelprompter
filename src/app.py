@@ -1,31 +1,36 @@
 from util.store import Store
-from util.router import Router
+from page.connections import Connections
 
 from textual.app import App
 from textual.binding import Binding
-from textual.widgets import Header, ContentSwitcher, Footer
+from textual.widgets import Header, ContentSwitcher, Footer, Placeholder
 
 # Create a new app
 class MP(App):
   TITLE = "ModelPrompter 0.0.1"
-  CSS_PATH = "./css/app.css"
+  CSS_PATH = "./css/app.tcss"
 
   def __init__(self):
-    self.router = Router(self, 'connections')
+    self.route = 'connections'
     super().__init__()
     self.store = Store(self, 'config.json')
     self.logs = []
 
-  # Log
+  # Log messages to the onscreen terminal
   def print(self, message):
     self.logs.append(message)
+    self.refresh()
+
+  # Simple router
+  def goto(self, route):
+    self.route = route
     self.refresh()
 
   # Compose the layout
   def compose(self):
     yield Header()
-    with ContentSwitcher(initial=self.router.route):
-      yield from self.router.compose()
+    with ContentSwitcher(initial=self.route):
+      yield Connections(id='connections')
     yield Footer()
 
   """

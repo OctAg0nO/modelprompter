@@ -24,7 +24,7 @@ class Store:
           self.app.print(f'🚨 File not found, new one created: {self.filename}')
       except Exception as e:
         self.app.print(f'🚨 {e}')
-      self.app.router.goto('connections')
+      self.app.goto('connections')
       return {}
 
   def save_data(self):

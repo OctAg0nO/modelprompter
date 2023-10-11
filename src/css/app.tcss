@@ -1,0 +1,125 @@
+# VARIABLES
+$primary-background: yellow;
+$secondary-background: cyan;
+# $text-muted: #91e673;
+# $text-disabled: #91e673;
+$text: #3d996b;
+
+$surface: #050f0e;
+$surface-darken-1: #040d0c;
+$surface-darken-2: #030b0a;
+$surface-darken-3: #020908;
+$surface-lighten-1: #0a1f1d;
+$surface-lighten-2: #0f2f2c;
+$surface-lighten-3: #143f3b;
+
+$background: #050f0e;
+$background-darken-1: #040d0c;
+$background-darken-2: #030b0a;
+$background-darken-3: #020908;
+$background-lighten-1: #0a1f1d;
+$background-lighten-2: #0f2f2c;
+$background-lighten-3: #143f3b;
+
+$boost: #061a17;
+$boost-darken-1: #051713;
+$boost-darken-2: #041310;
+$boost-darken-3: #030f0d;
+$boost-lighten-1: #0c2d28;
+$boost-lighten-2: #123d3b;
+$boost-lighten-3: #184d4e;
+
+$panel: #061a17;
+$panel-darken-1: #051713;
+$panel-darken-2: #041310;
+$panel-darken-3: #030f0d;
+$panel-lighten-1: #0c2d28;
+$panel-lighten-2: #123d3b;
+$panel-lighten-3: #184d4e;
+
+$primary: #3d996b;
+$primary-darken-1: #2e7a53;
+$primary-darken-2: #1f5c3b;
+$primary-darken-3: #0f3d23;
+$primary-lighten-1: #4daa7c;
+$primary-lighten-2: #6dc29e;
+$primary-lighten-3: #8ddabf;
+
+$accent: #ff1342;
+$accent-darken-1: #b91435;
+$accent-darken-2: #8d132c;
+$accent-darken-3: #5e1121;
+$accent-lighten-1: #ff3a5a;
+$accent-lighten-2: #ff6a7a;
+$accent-lighten-3: #ff9a9a;
+
+$error: #ff1342;
+$error-darken-1: #b91435;
+$error-darken-2: #8d132c;
+$error-darken-3: #5e1121;
+$error-lighten-1: #ff3a5a;
+$error-lighten-2: #ff6a7a;
+$error-lighten-3: #ff9a9a;
+
+$secondary: #ffd700;
+$secondary-darken-1: #b8a900;
+$secondary-darken-2: #8d7a00;
+$secondary-darken-3: #5e4c00;
+$secondary-lighten-1: #ffd900;
+$secondary-lighten-2: #ffec86;
+$secondary-lighten-3: #faf5db;
+
+$warning: #ffd700;
+$warning-darken-1: #b8a900;
+$warning-darken-2: #8d7a00;
+$warning-darken-3: #5e4c00;
+$warning-lighten-1: #ffd900;
+$warning-lighten-2: #ffec86;
+$warning-lighten-3: #faf5db;
+
+$success: #91e673;
+$success-darken-1: #6db14e;
+$success-darken-2: #4d8a2f;
+$success-darken-3: #2e5c1d;
+$success-lighten-1: #a9e98a;
+$success-lighten-2: #c6f0b0;
+$success-lighten-3: #e3f7d6;
+
+* {
+  color: #3d996b;
+}
+Footer, Header {
+  background: $panel;
+}
+.code_inline {
+  color: $warning;
+  background: $panel-lighten-1;
+}
+
+.sidebar {
+  max-width: 32;
+  padding-left: 1;
+  padding-right: 1;
+}
+
+.sidebar > Label {
+  color: $primary-lighten-3;
+}
+.sidebar > Input {
+  width: 100%;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.sidebar > Button {
+  width: 100%;
+  margin: 1;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+Markdown {
+  padding: 0;
+  margin: 0;
+}
