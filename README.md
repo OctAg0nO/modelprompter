@@ -15,6 +15,10 @@ To design the easiest and most hackable Graphical User Interface (GUI) and proce
 > This project is still in development and is not ready for use.
 
 # Work in progress screenshots
+### Configuration Wizard
+<img width="989" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/095fbb9f-f939-4367-8cca-2d82f136cce8">
+
+### Early prototype mockups
 <table>
   <tr>
     <td><h3>Terminal</h3><img width="800" alt="image" src="https://github.com/ZacTolle/modelprompter/assets/139601580/b2815cd5-82e4-4493-a71b-58eb01d09943"></td>
