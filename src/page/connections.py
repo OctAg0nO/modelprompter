@@ -10,10 +10,6 @@ COLUMNS = ["Connection", "Model", "MaxTokens", "Notes"]
 class Connections(Static):
   app = {}
 
-  BINDINGS = [  
-    Binding('Enter', 'add_or_select_connection', 'Add/select connection'),
-  ]
-  
   def __init__(self, id, app):
     super().__init__()
     self.id = id
@@ -44,9 +40,15 @@ Connections are saved into `./config.json`.
           yield DataTable(id='connections-table', cursor_type="row", zebra_stripes=True)
 
   def on_mount(self):
+    """
+    - Sets up the columns
+    - Loads initial data
+    - Selects the current row
+    """
     table = self.query_one('#connections-table')
     table.add_columns(*COLUMNS)
     table.add_rows(self.dbToRows(self.app.store.get('connections', [])))
+    self.select_row_by_id(self.app.store.get('current_connection'))
 
   def dbToRows(self, data, keys=["name", "model", "max_tokens", "notes"]):
     # Loop through and extract the keys from each connection
@@ -62,8 +64,8 @@ Connections are saved into `./config.json`.
     api_base = self.query_one('#connections-new-api-base').value
     max_tokens = self.query_one('#connections-new-max-tokens').value
 
-    table.add_row('Untitled', model, max_tokens, '')
     ID = uuid.uuid4().hex
+    table.add_row('Untitled', model, max_tokens, '', key=ID)
     self.app.store.append('connections', {
       'id': ID,
       'name': 'Untitled',
@@ -75,18 +77,21 @@ Connections are saved into `./config.json`.
       'notes': ''
     })
     self.app.store.set('current_connection', ID)
-    # self.select_row_by_id(ID)
-    # self.app.goto('prompt')
+    self.select_row_by_id(ID)
 
-  def add_or_select_connection(self):
+  def select_row_by_id(self, ID):
     """
-    Query the DataTable and check if it's focused
-    If it is, we'll select it otherwise we'll submit the form as is
+    - Selects the cursor by ID
+    - If ID is None, deselects the cursor
     """
     table = self.query_one('#connections-table')
-    self.create_connection()
-
-    # if (table.focused):
-    #   self.app.goto('prompt')
-    # else:
-    #   self.create_connection()
+    if (not ID):
+      table.move_cursor(row=None)
+    else:
+      connections = self.app.store.get('connections', [])
+      # Find the index of the connection with ID
+      index = next((index for (index, d) in enumerate(connections) if d["id"] == ID), None)
+      if (not index):
+        table.move_cursor(row=None)
+      else:
+        table.move_cursor(row=index)
