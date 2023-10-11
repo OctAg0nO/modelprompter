@@ -85,13 +85,18 @@ Connections are saved into `./config.json`.
     - If ID is None, deselects the cursor
     """
     table = self.query_one('#connections-table')
-    if (not ID):
-      table.move_cursor(row=None)
+    connections = self.app.store.get('connections', [])
+    # Find the index of the connection with ID
+    index = next((index for (index, d) in enumerate(connections) if d["id"] == ID), None)
+    if (not index):
+      table.move_cursor(row=0)
+      self.app.store.set('current_connection', None)
     else:
-      connections = self.app.store.get('connections', [])
-      # Find the index of the connection with ID
-      index = next((index for (index, d) in enumerate(connections) if d["id"] == ID), None)
-      if (not index):
-        table.move_cursor(row=None)
-      else:
-        table.move_cursor(row=index)
+      table.move_cursor(row=index)
+      self.app.store.set('current_connection', ID)
+
+  @on(DataTable.RowSelected, '#connections-table')
+  def on_row_selected(self, event):
+    """Sets the current_connection to the ID of the selected row"""
+    connections = self.app.store.get('connections', [])
+    self.select_row_by_id(connections[event.cursor_row]['id'])
