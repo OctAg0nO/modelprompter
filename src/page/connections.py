@@ -2,7 +2,7 @@ import uuid
 
 from textual import on
 from textual.binding import Binding
-from textual.widgets import Label, Header, DataTable, Button, Input, Markdown, Static
+from textual.widgets import Label, DataTable, Button, Input, Static
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 
 COLUMNS = ["Connection", "Model", "MaxTokens", "Notes"]

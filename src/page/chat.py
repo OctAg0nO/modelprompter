@@ -1,4 +1,4 @@
-from textual.widgets import Static, Placeholder
+from textual.widgets import Static, Placeholder, Input
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 
 class Chat(Static):
@@ -17,5 +17,8 @@ class Chat(Static):
       with Vertical(classes='pl1'):
         with ScrollableContainer():
           yield Placeholder('Messages')
-        with Horizontal(id='chat-input-wrap'):
-          yield Placeholder('Chat Input')
+        with Horizontal(id='chat-input-wrap', classes='p0'):
+          yield Input(value='', id='chat-input', placeholder='Type your prompt here...')
+
+  def on_mount(self):
+    self.query_one('#chat-input').focus()
