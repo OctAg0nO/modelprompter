@@ -22,14 +22,13 @@ class Chat(Static):
   def compose(self):
     with Horizontal():
       with ScrollableContainer(id='chat-sidebar', classes='sidebar mt0'):
-        yield Markdown('## Channels')
         for channel in self.channel_list:
-          yield Label(str(channel))
+          yield Button(str(channel))
       with Vertical(classes='pl1'):
         with ScrollableContainer():
           yield Placeholder('Messages')
         with Horizontal(id='chat-input-wrap', classes='p0'):
-          yield Input(value='', id='chat-input', placeholder='Type your prompt here...')
+          yield Input(value='', id='chat-input', placeholder='Prompt here...')
 
 
 
