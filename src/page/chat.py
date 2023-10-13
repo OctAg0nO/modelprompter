@@ -1,14 +1,16 @@
 import os
 import json
+from datetime import datetime
 from textual import on
 from textual.reactive import reactive
-from textual.widgets import Button, Static, Placeholder, Input, DataTable, Markdown
+from textual.widgets import Label, Static, Placeholder, Input, DataTable, Markdown
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 
 class Chat(Static):
   BINDINGS = []
   app = {}
   channel_list = reactive(list(), always_update=True, init=False)
+  messages = reactive(list(), always_update=True, init=False)
 
 
 
@@ -25,8 +27,8 @@ class Chat(Static):
       with ScrollableContainer(id='chat-sidebar', classes='sidebar mt0'):
         yield DataTable(id='chat-channels', cursor_type="row", zebra_stripes=True)
       with Vertical(classes='pl1'):
-        with ScrollableContainer():
-          yield Placeholder('Messages')
+        with ScrollableContainer(id='chat-messages'):
+          pass
         with Horizontal(id='chat-input-wrap', classes='p0'):
           yield Input(value='', id='chat-input', placeholder='Prompt here...')
 
@@ -78,4 +80,25 @@ class Chat(Static):
 
 
 
+  @on(Input.Submitted, '#chat-input')
+  def on_chat_input(self, event):
+    """
+    - Send the prompt to the API
+    - Add the prompt to the channel
+    - Clear the input
+    - Update the channel list
+    - Scroll to bottom
+    """
+    message = {
+      'role': 'user',
+      'content': event.value,
+      'timestamp': datetime.now().timestamp()
+    }
+    self.messages.append(message)
+    self.query_one('#chat-input').value = ''
 
+    new_message = Markdown(message['content'])
+    messages = self.query_one('#chat-messages')
+    messages.mount(new_message)
+    new_message.scroll_visible()
+    
