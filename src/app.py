@@ -1,4 +1,4 @@
-from util.helpers import snake
+from util.helpers import snake, desnake
 from util.store import Store
 from page.connections import Connections
 from page.chat import Chat
@@ -55,6 +55,16 @@ class MP(App):
     table.add_column('Navigation', width=23)
     table.add_row('Connections')
     table.add_row('Chat')
+
+    # Find the route in the tabe with the same name
+    route = desnake(self.route)
+    # loop through the rows and find the index of the route
+    for i, row in enumerate(table.rows):
+      nav = table.get_cell_at([i, 0]).lower()
+      if (nav == route):
+        table.move_cursor(row=i)
+        break
+    
     self.action_toggle_navigation()
 
 
