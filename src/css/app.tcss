@@ -132,6 +132,10 @@ Footer, Header {
 }
 
 # Helpers
+.hidden {
+  display: none;
+}
+
 .mt0 {
   margin-top: 0;
 }

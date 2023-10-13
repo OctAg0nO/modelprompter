@@ -27,16 +27,24 @@ class Store:
       self.app.goto('connections')
       return {}
 
+
+
   def save_data(self):
     with open(self.filename, 'w') as f:
       json.dump(self.data, f, indent='\t')
 
+
+
   def get(self, key, default=None):
-    return self.data.get(key) or default
+    return self.data.get(key, default)
+
+
 
   def set(self, key, value):
     self.data[key] = value
     self.save_data()
+
+
 
   def append(self, key, value):
     if (not self.data.get(key)):
