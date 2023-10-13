@@ -1,7 +1,8 @@
 import os
 import json
+from textual import on
 from textual.reactive import reactive
-from textual.widgets import Button, Static, Placeholder, Input, Label, Markdown
+from textual.widgets import Button, Static, Placeholder, Input, DataTable, Markdown
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 
 class Chat(Static):
@@ -22,8 +23,7 @@ class Chat(Static):
   def compose(self):
     with Horizontal():
       with ScrollableContainer(id='chat-sidebar', classes='sidebar mt0'):
-        for channel in self.channel_list:
-          yield Button(str(channel))
+        yield DataTable(id='chat-channels', cursor_type="row", zebra_stripes=True)
       with Vertical(classes='pl1'):
         with ScrollableContainer():
           yield Placeholder('Messages')
@@ -35,10 +35,15 @@ class Chat(Static):
   def on_mount(self):
     """
     - Focus input
-    - Create default channel/message if not exist
-    - Load existing channels/messages
-      - Select the active channel
+    - Go back to 'connections' if no connection is set    
+    - Load channels
     """
+    if not self.app.store.get('current_connection'):
+      self.app.goto('connections')
+
+    # Load channels
+    self.query_one('#chat-channels').add_column('Channels', width=23)
+    self.query_one('#chat-channels').add_rows([self.channel_list])
     self.query_one('#chat-input').focus()
 
 
@@ -70,3 +75,7 @@ class Chat(Static):
       with open(channel_path, 'w') as f:
         default_channel = {'name': 'General', 'messages': []}
         json.dump(default_channel, f)
+
+
+
+

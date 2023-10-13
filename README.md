@@ -60,7 +60,7 @@ pip install -r requirements.txt
 ## Running
 ```bash
 # Start
-watchmedo auto-restart -i env -R --no-restart-on-command-exit -p "*.py;*.json;*.tcss" --debounce-interval 0.2 python src/app.py
+watchmedo auto-restart -i env -R --no-restart-on-command-exit -p "*.py;*.tcss" --debounce-interval 0.2 python src/app.py
 
 # Stop
 CTRL+C
