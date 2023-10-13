@@ -14,7 +14,8 @@ class MP(App):
   TITLE = "ModelPrompter 0.0.1"
   CSS_PATH = "./css/app.tcss"
   BINDINGS = [
-    Binding("ctrl+b", "toggle_navigation", "Toggle Sidebar")
+    Binding("ctrl+b", "toggle_navigation", "Toggle Sidebar"),
+    Binding('escape', 'close_navigation', 'Close Sidebar', show=False)
   ]
 
 
@@ -75,6 +76,12 @@ class MP(App):
     sidebar.toggle_class('hidden')
     self.query_one('#navigation').focus()
 
+
+
+  # Close the sidebar
+  def action_close_navigation(self):
+    sidebar = self.query_one('#navigation-wrap')
+    sidebar.add_class('hidden')
 
 
   # Log messages to the onscreen terminal
