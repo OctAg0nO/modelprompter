@@ -105,7 +105,7 @@ Footer, Header {
 
 # Sidebar
 .sidebar {
-  max-width: 32;
+  max-width: 26;
   padding-right: 1;
 }
 

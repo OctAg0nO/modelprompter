@@ -13,11 +13,15 @@ class Connections(Static):
     Binding("f5", "reload_config", "Reload config"),
   ]
 
+
+
   def __init__(self, app, id):
     super().__init__()
     self.app = app
     self.id = id
-    
+
+
+
   def compose(self):
     # 2 column layout, 1 with a Placeholder and one with a DataTable
     # NOTE: id must === app.route
@@ -39,6 +43,8 @@ class Connections(Static):
         with ScrollableContainer(classes='pl1'):
           yield DataTable(id='connections-table', cursor_type="row", zebra_stripes=True)
 
+
+
   def on_mount(self):
     """
     - Sets up the columns
@@ -50,6 +56,8 @@ class Connections(Static):
     table.add_rows(self.dbToRows(self.app.store.get('connections', [])))
     self.select_row_by_id(self.app.store.get('current_connection'))
 
+
+
   def action_reload_config(self):
     """Reloads the config from the file"""
     table = self.query_one('#connections-table')
@@ -58,10 +66,14 @@ class Connections(Static):
     table.add_rows(self.dbToRows(self.app.store.get('connections', [])))
     self.select_row_by_id(self.app.store.get('current_connection'))
 
+
+
   def dbToRows(self, data, keys=["name", "model", "max_tokens", "notes"]):
     # Loop through and extract the keys from each connection
     return [list(map(lambda key: connection.get(key), keys)) for connection in data]
-  
+
+
+
   @on(Button.Pressed, '#connections-new-btn')
   def create_connection(self):
     """Adds a new connection to the DataTable"""
@@ -88,6 +100,8 @@ class Connections(Static):
     self.select_row_by_id(ID)
     self.app.goto('chat')
 
+
+
   def select_row_by_id(self, ID):
     """
     - Selects the cursor by ID
@@ -103,6 +117,8 @@ class Connections(Static):
     else:
       table.move_cursor(row=index)
       self.app.store.set('current_connection', ID)
+
+
 
   @on(DataTable.RowSelected, '#connections-table')
   def on_row_selected(self, event):
