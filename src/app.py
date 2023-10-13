@@ -1,7 +1,9 @@
+from util.helpers import snake
 from util.store import Store
 from page.connections import Connections
 from page.chat import Chat
 
+from textual import on
 from textual.app import App
 from textual.binding import Binding
 from textual.widgets import Header, ContentSwitcher, Footer, Placeholder, DataTable
@@ -30,11 +32,20 @@ class MP(App):
     yield Header()
     with Horizontal(id='main'):
       with ScrollableContainer(id='navigation-wrap', classes='sidebar mt0'):
-        yield DataTable(id='navigation')
+        yield DataTable(id='navigation', cursor_type="row", zebra_stripes=True)
       with ContentSwitcher(id='router', initial=self.route):
         yield Connections(id='connections', app=self)
         yield Chat(id='chat', app=self)
     yield Footer()
+
+
+
+  # Handle Nav routes
+  @on(DataTable.RowSelected, '#navigation')
+  def on_navigation_selected(self, event):
+    nav = self.query_one('#navigation')
+    route = snake(nav.get_row_at(event.cursor_row)[0])
+    self.goto(route)
 
 
 
@@ -44,18 +55,21 @@ class MP(App):
     table.add_column('Navigation', width=23)
     table.add_row('Connections')
     table.add_row('Chat')
+    self.action_toggle_navigation()
+
 
 
   # Toggle the sidebar
   def action_toggle_navigation(self):
     sidebar = self.query_one('#navigation-wrap')
     sidebar.toggle_class('hidden')
+    self.query_one('#navigation').focus()
+
 
 
   # Log messages to the onscreen terminal
   def print(self, message):
     self.logs.append(message)
-    self.refresh()
 
 
 
