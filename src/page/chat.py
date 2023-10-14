@@ -57,6 +57,8 @@ class Chat(Static):
     self.query_one('#chat-channels').add_rows([self.channel_list])
     self.query_one('#chat-input').focus()
 
+    self.load_initial_messages()
+
 
 
   def load_channels(self):
@@ -83,7 +85,6 @@ class Chat(Static):
     - Clear the input
     - Persist message
     - Send the prompt to the API
-    - Notify
     """
     message = {
       'role': 'user',
@@ -102,6 +103,11 @@ class Chat(Static):
 
     # Persist message
     self.store.append('messages', message)
+    # @todo send prompts to API
 
-    # Notify
-    self.notify(message['content'], title='Message persisted!')
+
+
+  def load_initial_messages(self):
+    messages = self.query_one('#chat-messages')
+    for message in self.store.get('messages'):
+      messages.mount(Markdown(message['content']))
