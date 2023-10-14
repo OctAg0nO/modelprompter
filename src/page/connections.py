@@ -35,7 +35,7 @@ class Connections(Static):
         yield Label('API Type')
         yield Input(value='open_ai', id='connections-new-api-type')
         yield Label('API Base')
-        yield Input(value='https://api.openai.com/v1/chat/completions', id='connections-new-api-base')
+        yield Input(value='https://api.openai.com/v1', id='connections-new-api-base')
         yield Label('Max tokens')
         yield Input(value='4096', id='connections-new-max-tokens')
         yield Button(id='connections-new-btn', label='Add new connection', variant='primary')
@@ -51,7 +51,11 @@ class Connections(Static):
     - Loads initial data
     - Selects the current row
     """
+    if (self.app.route != 'connections'):
+      return
+
     table = self.query_one('#connections-table')
+    table.clear(columns=True)
     table.add_columns(*COLUMNS)
     table.add_rows(self.dbToRows(self.app.store.get('connections', [])))
     self.select_row_by_id(self.app.store.get('current_connection'))

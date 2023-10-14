@@ -15,21 +15,15 @@ from textual.containers import ScrollableContainer, Horizontal, Vertical
 class Chat(Static):
   BINDINGS = []
   app = {}
-  store = {}
+  store = None
   channel_list = reactive(list(), always_update=True, init=False)
-  active_channel = reactive('', always_update=True, init=False)
+  current_channel = reactive('general', always_update=True, init=False)
 
 
   def __init__(self, app, id):
     super().__init__()
     self.app = app
     self.id = id
-    self.load_channels()
-    self.store = Store(self, f'data/chat/{self.active_channel}.json', {
-      'name': 'General',
-      'messages': [],
-      'script': 'lib.skills.simplechat'
-    })
 
 
 
@@ -51,8 +45,21 @@ class Chat(Static):
     - Go back to 'connections' if no connection is set    
     - Load channels
     """
+    if (self.app.route != 'chat'):
+      return
     if not self.app.store.get('current_connection'):
       self.app.goto('connections')
+      self.notify('No connection set, please select one first.', severity='error')
+      return
+
+    # Load channels
+    self.load_channels()
+    if (not self.store):
+      self.store = Store(self.app, f'data/chat/{self.current_channel}.json', {
+        'name': 'General',
+        'messages': [],
+        'script': './lib/skills/simplechat.py'
+      })
 
     # Load channels
     self.query_one('#chat-channels').add_column('Channels', width=23)
@@ -65,8 +72,13 @@ class Chat(Static):
 
   def load_channels(self):
     channel_dir = os.path.join(os.getcwd(), 'data', 'chat')
+
+    # Create the channel directory if it doesn't exist
+    if not os.path.exists(channel_dir):
+      os.makedirs(channel_dir)
     # Load all filenames in data/chat into an array
     filenames = [f for f in os.listdir(channel_dir) if os.path.isfile(os.path.join(channel_dir, f))]
+
     # Load each channel .json and grab the title
     self.channel_list = []
     for filename in filenames:
@@ -74,7 +86,7 @@ class Chat(Static):
       with open(os.path.join(channel_dir, filename), 'r') as f:
         channel = json.load(f)
         self.channel_list.append(channel['name'])
-        self.active_channel = channel['name']
+        self.current_channel = channel['name']
         self.app.store.set('current_channel', snake(channel['name']))
 
 

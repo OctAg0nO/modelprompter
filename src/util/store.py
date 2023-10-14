@@ -1,10 +1,11 @@
 import json
 import os
+from util.helpers import snake
 
 class Store:
   def __init__(self, app, filename, default={}):
     self.app = app
-    self.filename = os.path.join(os.path.abspath(__file__), os.path.abspath(filename))
+    self.filename = snake(os.path.join(os.path.abspath(__file__), os.path.abspath(filename)))
     self.error = []
     self.data = self.load_data(default)
 
@@ -24,7 +25,6 @@ class Store:
           self.app.print(f'🚨 File not found, new one created: {self.filename}')
       except Exception as e:
         self.app.print(f'🚨 {e}')
-      self.app.goto('connections')
       return default
 
 

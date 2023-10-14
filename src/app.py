@@ -17,6 +17,7 @@ class MP(App):
     Binding("ctrl+b", "toggle_navigation", "Toggle Sidebar"),
     Binding('escape', 'close_navigation', 'Close Sidebar', show=False)
   ]
+  logs = []
 
 
 
@@ -100,6 +101,7 @@ class MP(App):
   def goto(self, route):
     self.store.set('current_route', route)
     self.query_one('#router').current = route = self.route = route
+    self.query_one(f'#router #{route}').on_mount()
 
 
 
