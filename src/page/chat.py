@@ -1,13 +1,15 @@
 import os
 import json
 from datetime import datetime
+import importlib
+import sys
 
 from util.store import Store
 from util.helpers import snake
 
 from textual import on
 from textual.reactive import reactive
-from textual.widgets import Label, Static, Placeholder, Input, DataTable, Markdown
+from textual.widgets import Static, Input, DataTable, Markdown
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 
 class Chat(Static):
@@ -26,7 +28,7 @@ class Chat(Static):
     self.store = Store(self, f'data/chat/{self.active_channel}.json', {
       'name': 'General',
       'messages': [],
-      'api': ''
+      'script': 'lib.skills.simplechat'
     })
 
 
@@ -103,11 +105,59 @@ class Chat(Static):
 
     # Persist message
     self.store.append('messages', message)
-    # @todo send prompts to API
+    
+    # Send prompts to API
+    module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'lib', 'skills', 'simplechat.py'))
+    module_name = os.path.splitext(os.path.basename(module_path))[0]
+    sys.path.insert(0, os.path.dirname(module_path))
+
+    # Use importlib to import the module dynamically
+    module = importlib.import_module(module_name)
+
+    connections = self.app.store.get('connections')
+    current_connection = self.app.store.get('current_connection')
+    current_connection = list(filter(lambda connection: connection['id'] == current_connection, connections))[0]
+    response = module.run(current_connection, self.store.get('messages'))
+
+    # @todo lets store the full data
+    # Add the response message to the channel
+    if (response):
+      # Report empty
+      if (not response):
+        response = {
+          'role': 'error',
+          'content': 'No response',
+          'timestamp': datetime.now().timestamp()
+        }
+      # Report errors
+      elif (response.get('error')):
+        response = {
+          'role': 'error',
+          'content': response.get('error'),
+          'timestamp': datetime.now().timestamp()
+        }
+      # Report success
+      else:
+        response = {
+          'role': 'assistant',
+          'content': response['choices'][0]['message']['content'],
+          'timestamp': datetime.now().timestamp()
+        }
+
+      new_message = Markdown(response['content'])
+      self.store.append('messages', response)
+      messages.mount(new_message)
+      new_message.scroll_visible()
 
 
 
   def load_initial_messages(self):
     messages = self.query_one('#chat-messages')
+    last_message = None
     for message in self.store.get('messages'):
-      messages.mount(Markdown(message['content']))
+      last_message = Markdown(message['content'])
+      messages.mount(last_message)
+
+    # Scroll to bottom
+    if (last_message):
+      last_message.scroll_visible()

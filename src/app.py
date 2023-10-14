@@ -30,6 +30,7 @@ class MP(App):
     })
     self.route = self.store.get('current_route', 'connections')
     self.logs = []
+  
 
 
 

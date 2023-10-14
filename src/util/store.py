@@ -16,7 +16,7 @@ class Store:
     """
     try:
       with open(self.filename, 'r') as f:
-        return json.load(f)
+        return json.load(f) or default
     except FileNotFoundError:
       try:
         with open(self.filename, 'w') as f:

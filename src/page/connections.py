@@ -111,12 +111,8 @@ class Connections(Static):
     connections = self.app.store.get('connections', [])
     # Find the index of the connection with ID
     index = next((index for (index, d) in enumerate(connections) if d["id"] == ID), None)
-    if (not index):
-      table.move_cursor(row=0)
-      self.app.store.set('current_connection', None)
-    else:
-      table.move_cursor(row=index)
-      self.app.store.set('current_connection', ID)
+    table.move_cursor(row=index)
+    self.app.store.set('current_connection', ID)
 
 
 
