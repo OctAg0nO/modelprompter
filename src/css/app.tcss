@@ -99,8 +99,7 @@ Footer, Header {
   background: $panel;
 }
 .code_inline {
-  color: $warning;
-  background: $panel-lighten-2;
+  color: $error;
 }
 
 # Sidebar
@@ -154,6 +153,12 @@ Footer, Header {
 }
 
 
+# UI
+.datatable--cursor {
+  background: $accent-darken-3;
+}
+
+
 
 # Chat
 #chat-input-wrap {
@@ -163,4 +168,19 @@ Footer, Header {
   border: none;
   width: 100%;
   padding: 1;
+}
+
+Markdown {
+  padding: 1;
+  padding-left: 2;
+  padding-right: 2;
+  padding-bottom: 0;
+}
+
+.chat-message-role-user {
+  margin-left: 8;
+  background: $boost-darken-1;
+}
+.chat-message-role-assistant {
+  margin-right: 8;
 }

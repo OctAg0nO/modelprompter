@@ -96,7 +96,7 @@ class Chat(Static):
     self.query_one('#chat-input').value = ''
 
     # Add the prompt to the channel
-    new_message = Markdown(message['content'])
+    new_message = Markdown(message['content'], classes=f'chat-message chat-message-role-{message["role"]}')
     messages = self.query_one('#chat-messages')
     messages.mount(new_message)
 
@@ -107,7 +107,7 @@ class Chat(Static):
     self.store.append('messages', message)
     
     # Send prompts to API
-    module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'lib', 'skills', 'simplechat.py'))
+    module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', self.store.get('script')))
     module_name = os.path.splitext(os.path.basename(module_path))[0]
     sys.path.insert(0, os.path.dirname(module_path))
 
@@ -144,7 +144,7 @@ class Chat(Static):
           'timestamp': datetime.now().timestamp()
         }
 
-      new_message = Markdown(response['content'])
+      new_message = Markdown(response['content'], classes=f'chat-message chat-message-role-{response["role"]}')
       self.store.append('messages', response)
       messages.mount(new_message)
       new_message.scroll_visible()
@@ -155,7 +155,7 @@ class Chat(Static):
     messages = self.query_one('#chat-messages')
     last_message = None
     for message in self.store.get('messages'):
-      last_message = Markdown(message['content'])
+      last_message = Markdown(message['content'], classes=f'chat-message chat-message-role-{message["role"]}')
       messages.mount(last_message)
 
     # Scroll to bottom
