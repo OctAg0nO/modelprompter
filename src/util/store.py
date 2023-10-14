@@ -2,13 +2,13 @@ import json
 import os
 
 class Store:
-  def __init__(self, app, filename):
+  def __init__(self, app, filename, default={}):
     self.app = app
     self.filename = os.path.join(os.path.abspath(__file__), os.path.abspath(filename))
     self.error = []
-    self.data = self.load_data()
+    self.data = self.load_data(default)
 
-  def load_data(self):
+  def load_data(self, default={}):
     """
     - Loads the data from the file, if it exists.
     - If it doesn't, creates a new file, return an empty dict,
@@ -20,12 +20,12 @@ class Store:
     except FileNotFoundError:
       try:
         with open(self.filename, 'w') as f:
-          json.dump({}, f)
+          json.dump(default, f)
           self.app.print(f'🚨 File not found, new one created: {self.filename}')
       except Exception as e:
         self.app.print(f'🚨 {e}')
       self.app.goto('connections')
-      return {}
+      return default
 
 
 

@@ -22,7 +22,12 @@ class MP(App):
 
   def __init__(self):
     super().__init__()
-    self.store = Store(self, 'config.json')
+    self.store = Store(self, 'config.json', {
+      'current_connection': None,
+      'current_route': 'connections',
+      'connections': [],
+      'current_channel': None,
+    })
     self.route = self.store.get('current_route', 'connections')
     self.logs = []
 
