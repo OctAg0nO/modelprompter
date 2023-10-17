@@ -100,6 +100,9 @@ class Chat(Static):
     - Persist message
     - Send the prompt to the API
     """
+    if (not event.value.strip()):
+      return
+
     message = {
       'role': 'user',
       'content': event.value,

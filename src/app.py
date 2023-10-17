@@ -14,8 +14,7 @@ class MP(App):
   TITLE = "ModelPrompter 0.0.1"
   CSS_PATH = "./css/app.tcss"
   BINDINGS = [
-    Binding("ctrl+b", "toggle_navigation", "Toggle Sidebar"),
-    Binding('escape', 'close_navigation', 'Close Sidebar', show=False)
+    Binding("escape", "toggle_navigation", "Toggle Sidebar")
   ]
   logs = []
 

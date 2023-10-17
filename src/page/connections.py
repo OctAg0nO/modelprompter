@@ -5,7 +5,7 @@ from textual.binding import Binding
 from textual.widgets import Label, DataTable, Button, Input, Static
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 
-COLUMNS = ["Connection", "Model", "MaxTokens", "Notes"]
+COLUMNS = ["ConnectionName", "MaxTokens", "Notes"]
 
 class Connections(Static):
   app = {}
@@ -28,9 +28,9 @@ class Connections(Static):
     with Horizontal(id='route-connections'):
       with ScrollableContainer(classes='sidebar mt0'):
         # yield Markdown("""## New Connection""", classes="mt0")
-        yield Label('API Key*')
+        yield Label('API Key')
         yield Input(id='connections-new-key', value='', password=True)
-        yield Label('Model*')
+        yield Label('Model')
         yield Input(id='connections-new-model', value='gpt4')
         yield Label('API Type')
         yield Input(value='open_ai', id='connections-new-api-type')
@@ -38,6 +38,8 @@ class Connections(Static):
         yield Input(value='https://api.openai.com/v1', id='connections-new-api-base')
         yield Label('Max tokens')
         yield Input(value='4096', id='connections-new-max-tokens')
+        yield Label('Connection name')
+        yield Input(value='Untitled', id='connections-new-name')
         yield Button(id='connections-new-btn', label='Add new connection', variant='primary')
       with Vertical():
         with ScrollableContainer(classes='pl1'):
@@ -60,6 +62,9 @@ class Connections(Static):
     table.add_rows(self.dbToRows(self.app.store.get('connections', [])))
     self.select_row_by_id(self.app.store.get('current_connection'))
 
+    # Focus the first input
+    self.query_one('#connections-new-key').focus()
+
 
 
   def action_reload_config(self):
@@ -72,7 +77,7 @@ class Connections(Static):
 
 
 
-  def dbToRows(self, data, keys=["name", "model", "max_tokens", "notes"]):
+  def dbToRows(self, data, keys=["name", "max_tokens", "notes"]):
     # Loop through and extract the keys from each connection
     return [list(map(lambda key: connection.get(key), keys)) for connection in data]
 
@@ -87,12 +92,13 @@ class Connections(Static):
     api_type = self.query_one('#connections-new-api-type').value
     api_base = self.query_one('#connections-new-api-base').value
     max_tokens = self.query_one('#connections-new-max-tokens').value
+    connect_name = self.query_one('#connections-new-name').value
 
     ID = uuid.uuid4().hex
     table.add_row('Untitled', model, max_tokens, '', key=ID)
     self.app.store.append('connections', {
       'id': ID,
-      'name': 'Untitled',
+      'name': connect_name,
       'key': key,
       'model': model,
       'api_type': api_type,
